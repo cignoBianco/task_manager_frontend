@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router-dom"
+import type { Project } from "../../types/project"
 
 interface ProjectCardProps {
-    project: {
-        id: string
-        name: string
-        description: string
-    }
+    project: Project
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
@@ -17,7 +14,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             onClick={() => navigate(`/projects/${project.id}`)}
         >
             <h3 className="font-semibold text-lg mb-2">{project.name}</h3>
-            <p className="text-sm text-muted-foreground">{project.description}</p>
+            <p className="text-sm text-muted-foreground">{project.description || 'no description'}</p>
         </div>
     )
 }

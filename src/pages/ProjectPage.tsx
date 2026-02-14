@@ -2,23 +2,25 @@ import { useState } from "react"
 import { Button } from "../components/ui/button"
 import ProjectCard from "../components/projects/ProjectCard"
 import CreateProjectModal from "../components/projects/CreateProjectModal"
+import type { Project } from "../types/project"
 
 const dummyProjects = [
-    { id: "1", name: "Project Alpha", description: "Internal tool development" },
-    { id: "2", name: "Project Beta", description: "Marketing campaign" },
+    { id: "1", name: "Project Alpha", description: "Internal tool development", created_at: '2025-10-10' },
+    { id: "2", name: "Project Beta", description: "Marketing campaign", created_at: '2025-11-10' },
 ]
 
 export default function ProjectsPage() {
-    const [projects, setProjects] = useState(dummyProjects)
+    const [projects, setProjects] = useState<Project[]>(dummyProjects)
     const [isModalOpen, setModalOpen] = useState(false)
 
     const addProject = (name: string, description: string) => {
         const newProject = {
-            id: (projects.length + 1).toString(),
+            id: crypto.randomUUID(),
             name,
             description,
+            created_at: (new Date().toString())
         }
-        setProjects([...projects, newProject])
+        setProjects((prev) => [...prev, newProject])
         setModalOpen(false)
     }
 
