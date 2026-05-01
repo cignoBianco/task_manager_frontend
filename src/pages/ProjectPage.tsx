@@ -15,8 +15,16 @@ export default function ProjectsPage() {
     }
 
     useEffect(() => {
-        loadProjects()
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        void loadProjects()
     }, [])
+
+    // useEffect(() => {
+    //     const init = async () => {
+    //         await loadProjects()
+    //     }
+    //     init()
+    // }, [])
 
     const addProject = async (name: string, description: string) => {
         const newProject = await createProject({ name, description })

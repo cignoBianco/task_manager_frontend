@@ -1,3 +1,4 @@
+import { Droppable } from "@hello-pangea/dnd"
 import type { TaskStatus, Task } from "../../types/task"
 import { useState } from "react"
 import TaskCard from "./TaskCard"
@@ -14,7 +15,7 @@ export default function KanbanColumn({
     title,
     status,
     tasks,
-    onMove,
+    // onMove,
     onAddTask,
 }: Props) {
     const [newTitle, setNewTitle] = useState("")
@@ -46,11 +47,24 @@ export default function KanbanColumn({
                 </div>
             )}
 
-            <div className="space-y-3">
-                {filtered.map((task) => (
-                    <TaskCard key={task.id} task={task} onMove={onMove} />
-                ))}
-            </div>
+            <Droppable droppableId={status}>
+                {(provided) => (
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className="space-y-3 min-h-[100px]"
+                    >
+                        {filtered.map((task, index) => (
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                index={index}
+                            />
+                        ))}
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
         </div>
     )
 }

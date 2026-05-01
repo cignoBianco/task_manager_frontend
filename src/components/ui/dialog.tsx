@@ -1,16 +1,20 @@
 import * as React from "react"
 
-interface DialogProps {
-    open: boolean
-    onOpenChange: (open: boolean) => void
-    children: React.ReactElement<{ onClose: () => void }>
-}
+// interface DialogProps {
+//     open: boolean
+//     onOpenChange: (open: boolean) => void
+//     children: React.ReactElement<{ onClose: () => void }>
+// }
 
-export function Dialog({ open, onOpenChange, children }: DialogProps) {
+export function Dialog({ open, children }: {
+    open: boolean
+    children: React.ReactNode
+}) {
     if (!open) return null
+
     return (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            {React.cloneElement(children, { onClose: () => onOpenChange(false) })}
+            {children}
         </div>
     )
 }

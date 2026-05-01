@@ -1,6 +1,6 @@
 import { Calendar, dateFnsLocalizer } from "react-big-calendar"
 import { format, parse, startOfWeek, getDay } from "date-fns"
-import { useTaskStore } from "@/store/taskStore"
+import { useTaskStore } from "../../store/taskStore"
 
 const localizer = dateFnsLocalizer({
     format,
@@ -15,8 +15,8 @@ export default function CalendarView() {
 
     const events = tasks.map((t) => ({
         title: t.title,
-        start: new Date(),
-        end: new Date(),
+        start: t.start_date ? new Date(t.start_date) : new Date(),
+        end: t.due_date ? new Date(t.due_date) : new Date(),
     }))
 
     return (

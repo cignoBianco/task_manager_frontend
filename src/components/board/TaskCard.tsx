@@ -1,32 +1,32 @@
-import type { Task, TaskStatus } from "../../types/task"
+import { Draggable } from "@hello-pangea/dnd"
+import type { Task } from "../../types/task"
 
 interface Props {
     task: Task
-    onMove: (taskId: string, status: TaskStatus) => void
+    // onMove: (taskId: string, status: TaskStatus) => void
+    index: number
 }
 
-export default function TaskCard({ task, onMove }: Props) {
-    const nextStatus: Record<TaskStatus, TaskStatus | null> = {
-        new: "in_progress",
-        in_progress: "review",
-        review: "done",
-        done: null,
-    }
+export default function TaskCard({ task, index }: Props) {
+    // const nextStatus: Record<TaskStatus, TaskStatus | null> = {
+    //     new: "in_progress",
+    //     in_progress: "review",
+    //     review: "done",
+    //     done: null,
+    // }
 
     return (
-        <div className="bg-white p-3 rounded-lg shadow-sm border">
-            <p className="mb-3 text-sm">{task.title}</p>
-
-            {nextStatus[task.status] && (
-                <button
-                    className="text-xs bg-gray-200 px-2 py-1 rounded"
-                    onClick={() =>
-                        onMove(task.id, nextStatus[task.status] as TaskStatus)
-                    }
+        <Draggable draggableId={task.id} index={index}>
+            {(provided) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="bg-white p-3 rounded-lg shadow-sm border"
                 >
-                    Move →
-                </button>
+                    <p>{task.title}</p>
+                </div>
             )}
-        </div>
+        </Draggable>
     )
 }

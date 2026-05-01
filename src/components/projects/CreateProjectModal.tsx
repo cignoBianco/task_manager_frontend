@@ -25,7 +25,7 @@ export default function CreateProjectModal({
     }
 
     return (
-        <Dialog open={open} onOpenChange={onClose}>
+        <Dialog open={open}>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Create Project</DialogTitle>

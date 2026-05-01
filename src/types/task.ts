@@ -10,5 +10,7 @@ export interface Task {
   tags: {
     id: string
     name: string
-  }[]
+  }[],
+  start_date?: string
+  due_date?: string
 }
