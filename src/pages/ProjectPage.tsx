@@ -1,25 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "../components/ui/button"
 import ProjectCard from "../components/projects/ProjectCard"
 import CreateProjectModal from "../components/projects/CreateProjectModal"
 import type { Project } from "../types/project"
-
-const dummyProjects = [
-    { id: "1", name: "Project Alpha", description: "Internal tool development", created_at: '2025-10-10' },
-    { id: "2", name: "Project Beta", description: "Marketing campaign", created_at: '2025-11-10' },
-]
+import { getProjects, createProject } from "../api/projects"
 
 export default function ProjectsPage() {
-    const [projects, setProjects] = useState<Project[]>(dummyProjects)
+    const [projects, setProjects] = useState<Project[]>([])
     const [isModalOpen, setModalOpen] = useState(false)
 
-    const addProject = (name: string, description: string) => {
-        const newProject = {
-            id: crypto.randomUUID(),
-            name,
-            description,
-            created_at: (new Date().toString())
-        }
+    const loadProjects = async () => {
+        const data = await getProjects()
+        setProjects(data)
+    }
+
+    useEffect(() => {
+        loadProjects()
+    }, [])
+
+    const addProject = async (name: string, description: string) => {
+        const newProject = await createProject({ name, description })
         setProjects((prev) => [...prev, newProject])
         setModalOpen(false)
     }
